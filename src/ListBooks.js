@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import * as BooksAPI from './BooksAPI'
 // import escapeRegExp from 'escape-string-regexp'
 
 class ListBooks extends Component {
 	state = {
-		query: ''
+		query: '',
 	}
 
 	updateQuery = (query) => {
-		this.setState({query: query.trim() })
+		this.setState({query: query})
 	}
 
-	clearQuery = () => {
-		this.setState({ query: '' })
+	_handleKeyPress = (e) => {
+		if (e.key === 'Enter') {
+			console.log(BooksAPI.getAll())
+			console.log(BooksAPI.search("Artificial Intelligence", 3))
+		}
 	}
 
 	render() {
@@ -32,7 +36,8 @@ class ListBooks extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" placeholder="Search by title or author" value={query} onChange={(event) => this.updateQuery(event.target.value)}/>
+                <input type="text" placeholder="Search by title or author" value={query} onChange={(event) => this.updateQuery(event.target.value)}
+                />
 
               </div>
             </div>
