@@ -3,7 +3,8 @@ import * as BooksAPI from './BooksAPI'
 
 class CurrentlyReading extends Component {
 	state = {
-		books: []
+		books: [],
+		value: "currentlyReading"
 	}
 
 	componentWillMount() {
@@ -15,6 +16,18 @@ class CurrentlyReading extends Component {
 			))
 			self.setState({books: tempBooks})
 		})
+	}
+
+	moveBook = (selected) => {
+		if (selected !== undefined) {
+			if (selected.value === "wantToRead") {
+				console.log("test")
+			} else if (selected.value === "read") {
+				console.log("you read it")
+			} else if (selected.value === "none") {
+				console.log("none selected")
+			}
+		}
 	}
 
 	render() {
@@ -31,12 +44,12 @@ class CurrentlyReading extends Component {
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                              <select>
+                              <select defaultValue={this.state.value} onChange={event => this.moveBook({value: event.target.value})}>
                                 <option value="none" disabled>Move to...</option>
                                 <option selected value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
+                                <option onClick={this.moveBook()} value="wantToRead">Want to Read</option>
+                                <option onClick={this.moveBook()} value="read">Read</option>
+                                <option onClick={this.moveBook()} value="none">None</option>
                               </select>
                             </div>
                           </div>
