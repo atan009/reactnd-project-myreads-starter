@@ -16,7 +16,7 @@ class ListBooks extends Component {
 	handleKeyPress = (e) => {
 		var self = this
 		if (e.key === 'Enter') {
-			BooksAPI.search(self.state.query, 3).then(function(value) {
+			BooksAPI.search(self.state.query, 20).then(function(value) {
 				self.setState({bookResults: value})
 			})
 		}
