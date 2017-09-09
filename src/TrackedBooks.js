@@ -47,7 +47,6 @@ class TrackedBooks extends Component {
 					value.filter(key => key.shelf === "read").map((book) => (
 						tempBooks3.push(book)
 					))
-					console.log(tempBooks1)
 					self.setState((state) => ({
 						currentlyReadingBooks: tempBooks1,
 						wantToReadBooks: tempBooks2,
@@ -72,9 +71,9 @@ class TrackedBooks extends Component {
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                              <select defaultValue={this.state.crValue} onChange={event => this.moveBook(book, event.target.value)}>
+                              <select value={book.shelf} onChange={event => this.moveBook(book, event.target.value)}>
                                 <option value="none" disabled>Move to...</option>
-                                <option selected value="currentlyReading">Currently Reading</option>
+                                <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
                                 <option value="read">Read</option>
                                 <option value="none">None</option>
@@ -102,10 +101,10 @@ class TrackedBooks extends Component {
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                              <select defaultValue={this.state.wtrValue} onChange={event => this.moveBook(book, event.target.value)}>
+                              <select value={book.shelf} onChange={event => this.moveBook(book, event.target.value)}>
                                 <option value="none" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
-                                <option selected value="wantToRead">Want to Read</option>
+                                <option value="wantToRead">Want to Read</option>
                                 <option value="read">Read</option>
                                 <option value="none">None</option>
                               </select>
@@ -133,11 +132,11 @@ class TrackedBooks extends Component {
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
-                              <select  defaultValue={this.state.rValue} onChange={event => this.moveBook(book, event.target.value)}>
+                              <select  value={book.shelf} onChange={event => this.moveBook(book, event.target.value)}>
                                 <option value="none" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
-                                <option selected value="read">Read</option>
+                                <option value="read">Read</option>
                                 <option value="none">None</option>
                               </select>
                             </div>

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-// import escapeRegExp from 'escape-string-regexp'
 
 class ListBooks extends Component {
 	state = {
 		query: '',
+		trackedBooks: [],
 		bookResults: []
 	}
 
@@ -14,10 +14,25 @@ class ListBooks extends Component {
 	}
 
 	handleKeyPress = (e) => {
+		var storedbooks = []
 		var self = this
+
 		if (e.key === 'Enter') {
 			BooksAPI.search(self.state.query, 20).then(function(value) {
-				self.setState({bookResults: value})
+				storedbooks = value.map(book => {
+					for (var i = 0; i < self.state.trackedBooks.length; i++) {
+						if (book.id === self.state.trackedBooks[i].id) {
+							book.shelf = self.state.trackedBooks[i].shelf
+							break;
+						}
+						else {
+							book.shelf = "none"
+						}
+					}
+
+					return book
+				})
+				self.setState({bookResults: storedbooks})
 			})
 		}
 	}
@@ -25,23 +40,20 @@ class ListBooks extends Component {
 	componentWillMount() {
 		var self = this
 		BooksAPI.getAll().then(function(value) {
-			self.setState({bookResults: value})
+			self.setState({
+				trackedBooks: value,
+			})
 		})
 	}
 
 	moveBook = (book: any, shelf: string) => {
-		// var self = this
 		if (shelf !== undefined) {
-			if (shelf === "wantToRead") {
 				BooksAPI.update(book, shelf)
-			}
 		}
 	}
 
 	render() {
 		const { query } = this.state
-		console.log(this.state.bookResults)
-
 
 	    return (<div>
 	    	<div className="search-books">
@@ -71,12 +83,12 @@ class ListBooks extends Component {
 	                  <div className="book-top">
 	                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
 	                    <div className="book-shelf-changer">
-	                      <select defaultValue={this.state.value} onChange={event => this.moveBook(book, event.target.value)}>
+	                      <select value={book.shelf} onChange={event => this.moveBook(book, event.target.value)}>
 	                        <option value="none" disabled>Move to...</option>
 	                        <option value="currentlyReading">Currently Reading</option>
 	                        <option value="wantToRead">Want to Read</option>
 	                        <option value="read">Read</option>
-	                        <option selected value="none">None</option>
+	                        <option value="none">None</option>
 	                      </select>
 	                    </div>
 	                  </div>
