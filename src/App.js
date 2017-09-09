@@ -4,9 +4,7 @@ import { Route } from 'react-router-dom'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBooks from './ListBooks'
-import CurrentlyReading from './CurrentlyReading'
-import WantToRead from './WantToRead'
-import Read from './Read.js'
+import TrackedBooks from './TrackedBooks'
 
 class BooksApp extends React.Component {
   state = {
@@ -28,11 +26,9 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <div>
-              <CurrentlyReading/>
-              <WantToRead/>
-              <Read/>
-              </div>
+              
+              <TrackedBooks/>
+              
             </div>
             <div className="open-search">
                 <Link to='/search' onClick={() => this.setState({ showSearchPage: true })}>Add a book</Link>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as BooksAPI from './BooksAPI'
 
-class CurrentlyReading extends Component {
+class TrackedBooks extends Component {
 	state = {
 		currentlyReadingBooks: [],
 		wantToReadBooks:[],
