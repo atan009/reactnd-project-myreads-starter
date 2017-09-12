@@ -5,14 +5,12 @@ import * as BooksAPI from './BooksAPI'
 class ListBooks extends Component {
 	state = {
 		query: '',
-		bookResults: []
+		bookResults: [],
 	}
 
 	updateQuery = (query) => {
 		this.setState({query: query})
-	}
 
-	handleKeyPress = (e) => {
 		var storedbooks = []
 		var self = this
 
@@ -22,7 +20,7 @@ class ListBooks extends Component {
 				for (var i = 0; i < self.props.books.length; i++) {
 					if (book.id === self.props.books[i].id) {
 						book.shelf = self.props.books[i].shelf
-						break;
+						break
 					}
 				}
 				return book
@@ -31,14 +29,6 @@ class ListBooks extends Component {
 		})
 	}
 
-	componentWillMount() {
-		var self = this
-		BooksAPI.getAll().then(function(value) {
-			self.setState({
-				trackedBooks: value,
-			})
-		})
-	}
 
 	render() {
 		const { query } = this.state
@@ -56,7 +46,7 @@ class ListBooks extends Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
                 <input type="text" placeholder="Search by title or author" value={query} onChange={(event) => this.updateQuery(event.target.value)}
-                onKeyPress={this.handleKeyPress}/>
+                />
 
               </div>
             </div>
@@ -70,7 +60,7 @@ class ListBooks extends Component {
 	                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
 	                    <div className="book-shelf-changer">
 	                      <select value={book.shelf} onChange={event => this.props.onAddOrChangeShelf(book, event.target.value)}>
-	                        <option value="none" disabled>Move to...</option>
+	                        <option value="unselectable" disabled>Move to...</option>
 	                        <option value="currentlyReading">Currently Reading</option>
 	                        <option value="wantToRead">Want to Read</option>
 	                        <option value="read">Read</option>
